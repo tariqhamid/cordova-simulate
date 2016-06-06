@@ -441,10 +441,16 @@ module.exports = function (messages) {
 
     var cordovaVersionLabel = document.getElementById('device-cordova-version');
 
+    function setCordovaVersion(version) {
+        cordovaVersionLabel.value = version || 'unknown';
+    }
+
     messages.call('cordova-version').then(function (version) {
-        cordovaVersionLabel.value = version;
-    }).fail(function () {
-        cordovaVersionLabel.value = 'unknown';
+        setCordovaVersion(version);
+    });
+
+    messages.on('cordova-version', function (event, version) {
+        setCordovaVersion(version);
     });
 
     return {
