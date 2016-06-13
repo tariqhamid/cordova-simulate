@@ -30,6 +30,10 @@ function init(server) {
     io = require('socket.io')(server);
 
     io.on('connection', function (socket) {
+        socket.on('debug-message', function (data) {
+            emitToHost(DEBUG_HOST, data.message, data.data);
+        });
+
         socket.on('register-app-host', function () {
             log.log('App-host registered with server.');
 
@@ -51,10 +55,6 @@ function init(server) {
 
             socket.on('telemetry', function (data) {
                 telemetry.handleClientTelemetry(data);
-            });
-
-            socket.on('debug-message', function (data) {
-                emitToHost(DEBUG_HOST, data.message, data.data);
             });
 
             // Set up live reload if necessary.
@@ -105,10 +105,6 @@ function init(server) {
 
             socket.on('telemetry', function (data) {
                 telemetry.handleClientTelemetry(data);
-            });
-
-            socket.on('debug-message', function (data) {
-                emitToHost(DEBUG_HOST, data.message, data.data);
             });
 
             // Set up telemetry if necessary.
