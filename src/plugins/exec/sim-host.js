@@ -13,11 +13,14 @@ module.exports = {
         var execList = document.getElementById('exec-list');
         execList.addEventListener('itemremoved', function (e) {
             savedSims.removeSim(e.detail.itemIndex);
-            addEmptyItem();
+
+            if (!savedSims.sims.length) {
+                showEmptyLabel();
+            }
         });
 
         event.on('saved-sim-added', function (sim) {
-            removeEmptyItem();
+            hideEmptyLabel();
             execList.addItem(cordovaItemFromSim(sim));
         });
 
@@ -27,7 +30,7 @@ module.exports = {
             });
         } else {
             // Create a "No values saved" item
-            addEmptyItem();
+            showEmptyLabel();
         }
     }
 };
@@ -51,36 +54,13 @@ function cordovaItemFromSim(sim) {
     return cordovaItem;
 }
 
-function createEmptyItem() {
-    var labeledValue = new CordovaLabeledValue();
-    labeledValue.label = 'No values saved';
-    labeledValue.value = '';
-    var cordovaItem = new CordovaItem();
-    cordovaItem.appendChild(labeledValue);
-    return cordovaItem;
+function showEmptyLabel() {
+    document.getElementById('empty-label').classList.remove('cordova-hidden');
+    document.getElementById('exec-list').classList.add('cordova-hidden');
 }
 
-var hasEmptyItem = false;
-function addEmptyItem() {
-    if (hasEmptyItem) {
-        return;
-    }
-
-    var execList = document.getElementById('exec-list');
-    var sims = savedSims.sims;
-    if (sims.length === 0) {
-        execList.addItem(createEmptyItem());
-        hasEmptyItem = true;
-    }
-}
-
-function removeEmptyItem() {
-    if (!hasEmptyItem) {
-        return;
-    }
-
-    var execList = document.getElementById('exec-list');
-    execList.removeItem(0);
-    hasEmptyItem = false;
+function hideEmptyLabel() {
+    document.getElementById('empty-label').classList.add('cordova-hidden');
+    document.getElementById('exec-list').classList.remove('cordova-hidden');
 }
 
