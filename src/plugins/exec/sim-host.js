@@ -6,11 +6,15 @@
 var savedSims = require('./saved-sims');
 var event = require('event');
 
+var emptyLabel;
+var execList;
+
 module.exports = {
     initialize: function () {
         var sims = savedSims.sims;
 
-        var execList = document.getElementById('exec-list');
+        emptyLabel = document.getElementById('empty-label');
+        execList = document.getElementById('exec-list');
         execList.addEventListener('itemremoved', function (e) {
             savedSims.removeSim(e.detail.itemIndex);
 
@@ -55,12 +59,12 @@ function cordovaItemFromSim(sim) {
 }
 
 function showEmptyLabel() {
-    document.getElementById('empty-label').classList.remove('cordova-hidden');
-    document.getElementById('exec-list').classList.add('cordova-hidden');
+    emptyLabel.classList.remove('cordova-hidden');
+    execList.classList.add('cordova-hidden');
 }
 
 function hideEmptyLabel() {
-    document.getElementById('empty-label').classList.add('cordova-hidden');
-    document.getElementById('exec-list').classList.remove('cordova-hidden');
+    emptyLabel.classList.add('cordova-hidden');
+    execList.classList.remove('cordova-hidden');
 }
 
