@@ -52,7 +52,7 @@ var CONSTANTS = {
         viewportMode: 'VIEWPORT_MODE_KEY',
         selectedDevice: 'VIEWPORT_SELECTED_DEVICE_KEY',
         width: 'VIEWPORT_CUSTOM_WIDTH_KEY',
-        height: 'VIEWPORT_CUSTOM_HEIGHT_KEY',
+        height: 'VIEWPORT_CUSTOM_HEIGHT_KEY'
     },
     id: {
         desktop: 'viewport-desktop',
